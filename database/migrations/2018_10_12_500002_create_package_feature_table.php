@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreatePackageFeatureTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('package_feature', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-			 
-			$table->boolean('activated')->default(false);
-            $table->string('token'); 
-			
-            $table->rememberToken();
-			
+			$table->string('title');
+            $table->string('description');  
+		    $table->integer('order_by'); 
+		    $table->integer('package_id')->unsigned();
+			$table->foreign('package_id')->references('id')->on('plan_packages')->onDelete('cascade');
             $table->timestamps();
 			$table->softDeletes();
         });
@@ -36,6 +32,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('package_feature');
     }
 }
