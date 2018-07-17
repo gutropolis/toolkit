@@ -18,7 +18,7 @@
             });
         } );
     });
-
+ 
 	$("#edit_roles").on("show.bs.modal", function(e) {
             var id = $(e.relatedTarget).data('target-id');
 			

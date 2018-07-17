@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 	     Yajra\DataTables\DataTablesServiceProvider::class, 
+		 Brian2694\Toastr\ToastrServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -213,7 +214,7 @@ return [
 	    'DataTables' => Yajra\DataTables\Facades\DataTables::class,	
 		'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class, 
-		
+		'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
 		//'JWTAuth' =>  Tymon\JWTAuth\Facades\JWTAuth::class,
 	    //'JWTFactory' =>  Tymon\JWTAuth\Facades\JWTFactory::class,
     ],

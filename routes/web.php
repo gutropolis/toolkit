@@ -69,8 +69,15 @@ Auth::routes();
 	//Opportunity End Here//
 	
 	//Work For Plan Type Management Start Here//
-		Route::resource('plans','Admin\AdminPlanController');
-		Route::get('plans/destroy/{id}','Admin\AdminPlanController@destroy')->name('plans.destroy');
+	 
+		Route::get('plans', 'Admin\AdminPlanController@index')->name('plans.index');
+		Route::post('plans/store','Admin\AdminPlanController@store')->name('plans.store'); 
+		Route::get('plans/edit/{id}', 'Admin\AdminPlanController@edit');
+		Route::get('plans/update/', 'Admin\AdminPlanController@update');
+		Route::post('plans/update/{id}', 'Admin\AdminPlanController@update')->name('plans.update');; 
+		Route::get('plans/getdata', 'Admin\AdminPlanController@data')->name('plans.getdata'); 
+		Route::post('plans/destroy/{id}','Admin\AdminPlanController@destroy')->name('plans.destroy');
+		
 	//Plan Management End Here//
 	
 	//Work For Packages Management 
