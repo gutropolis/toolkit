@@ -81,12 +81,11 @@ Auth::routes();
 	
 	
 	// PlanPackages
-	 Route::get('planpackage/data','Admin\AdminPlanPackageController@getdata')->name('planpackage.data');
-	 Route::get('planpackage/show/{id}', 'Admin\AdminPlanPackageController@show'); 
-	 Route::post('planpackage/update/{id}', 'Admin\AdminPlanPackageController@update')->name('planpackage.update');
-	  
-	 Route::post('planpackage/destroy/{id}','Admin\AdminPlanPackageController@destroy')->name('plans.destroy');
-	  Route::resource('planpackage','Admin\AdminPlanPackageController');
+			Route::get('planpackage/data','Admin\AdminPlanPackageController@getdata')->name('planpackage.data');
+			Route::get('planpackage/show/{id}', 'Admin\AdminPlanPackageController@show'); 
+			Route::post('planpackage/update/{id}', 'Admin\AdminPlanPackageController@update')->name('planpackage.update'); 
+			Route::post('planpackage/destroy/{id}','Admin\AdminPlanPackageController@destroy')->name('planpackage.destroy');
+			Route::resource('planpackage','Admin\AdminPlanPackageController');
 	
 
 	
@@ -95,9 +94,10 @@ Auth::routes();
 		Route::get('package-feature/destroy/{id}','Admin\AdminPackageFeaturesController@destroy')->name('package-feature.destroy');
 	 
 	
- 
-	
-	
+		//Work on website Setting
+		Route::resource('settings','Admin\AdminSettingsController');
+		 
+	 
 	
     Route::resource('users','Admin\AdminUserController');
 	Route::get('users/data','Admin\AdminUserController@data')->name('users.data');
