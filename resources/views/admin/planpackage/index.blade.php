@@ -43,7 +43,7 @@
 											<h6 class="card-subtitle">Plans are name of plan</h6>
 										</div>
 										<div class="col-sm-7 text-right">
-											<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addPlanPackage"><i class="fa fa-plus"></i> Add New</button>    
+											<button type="button" id="btn_add" class="btn btn-info"  ><i class="fa fa-plus"></i> Add New</button>    
 										</div>
 									</div>
 									
@@ -65,7 +65,9 @@
 
 									</div>
 									<!-- Add Model Start here ------->
-									<div class="modal fade" id="addPlanPackage" tabindex="-1" role="dialog" aria-labelledby="addModel">
+									 <!-- Passing BASE URL to AJAX -->
+									<input id="hdnurl" type="hidden" value="{{ \Request::url() }}">
+									<div class="modal fade" id="mymodel" tabindex="-1" role="dialog" aria-labelledby="mymodel">
 														<div class="modal-dialog" role="document">
 															<div class="modal-content">
 																<div class="modal-header">
@@ -77,7 +79,7 @@
                                                                            <div class="form-group">
 																				<h5>Select Plan <span class="text-danger">*</span></h5>
 																				<div class="controls"> 
-																						<select name="plan_type" id="select" required="" class="form-control" aria-invalid="false">
+																						<select name="plan_type" id="plan_type" required="" class="form-control" aria-invalid="false">
                                                                                         @if (count($planData) > 0)
                                                                                              <option value="">Choose Plan</option>
                                                                                            @foreach ($planData as $objplan) 
@@ -96,7 +98,7 @@
 																							<div class="controls">
 																									<div class="switch">
 																										<label>OFF
-																											<input checked="" name="have_trial" value="1" type="checkbox"><span class="lever"></span>ON</label>
+																											<input id="have_trial" name="have_trial" value="1" type="checkbox"><span class="lever"></span>ON</label>
 																									</div>
 																							</div>
 																						</div>
@@ -105,7 +107,7 @@
 																						<div class="form-group">
 																							<h5>Trial Interval <span class="text-danger">*</span></h5>
 																							<div class="controls">
-																								<input name="trial_days" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
+																								<input id="trial_days" name="trial_days" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
 																								<div class="help-block"></div>
 																							</div>
 																						</div>
@@ -116,7 +118,7 @@
 																						<div class="form-group">
 																							<h5>Monthly Price <span class="text-danger">*</span></h5>
 																							<div class="controls">
-																								<input name="price_month" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
+																								<input id="price_month" name="price_month" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
 																								<div class="help-block"></div>
 																							</div>
 																						</div>
@@ -125,7 +127,7 @@
 																						<div class="form-group">
 																							<h5>Yearly Price <span class="text-danger">*</span></h5>
 																							<div class="controls">
-																								<input name="price_yearly" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
+																								<input  id="price_yearly" name="price_yearly" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
 																								<div class="help-block"></div>
 																							</div>
 																						</div>
@@ -136,7 +138,7 @@
 																						<div class="form-group">
 																							<h5>User Limit <span class="text-danger">*</span></h5>
 																							<div class="controls">
-																								<input name="users_limit" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
+																								<input   id="users_limit"  name="users_limit" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
 																								<div class="help-block"></div>
 																							</div>
 																						</div>
@@ -147,7 +149,7 @@
 																							<div class="controls">
 																								 <div class="switch">
 																										<label>OFF
-																											<input checked=""  value="1" name ="support_available" type="checkbox"><span class="lever"></span>ON</label>
+																											<input   id="support_available"   value="1" name ="support_available" type="checkbox"><span class="lever"></span>ON</label>
 																								 </div>
 																							</div>
 																						</div>
@@ -160,27 +162,15 @@
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 																	 
-																	<button type="submit" class="btn btn-primary">Submit</button>
+																	<button type="submit" id="btn-save" class="btn btn-primary">Submit</button>
+																	<input type="hidden" id="hdnpkgid" name="hdnpkgid" value="0">
 																</div>
 																{!! Form::close() !!}
 															</div>
 														</div>
 									 </div>
 									 
-									<!-- Edit Model Here ------------>
-									<div class="modal fade" id="myModalPlan" tabindex="-1" role="dialog" aria-labelledby="myModalPlan" aria-hidden="true">
-									   
-									  <div class="modal-dialog">
-											<div class="modal-content" id="edithtml">
-											   <!-- Server Side Code Here -->
-											 
-											   
-											   <!--End here --->
-											</div>
-									  </div>
-									</div>
-									
-									<!-- Edit Model Here ---------->
+							 
                  
                                     <!-- Delete Model -->
 											 

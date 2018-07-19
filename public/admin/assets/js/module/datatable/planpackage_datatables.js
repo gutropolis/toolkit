@@ -1,5 +1,5 @@
 //Add Datatables Listing for showing //
-	$(document).ready(function() { 
+$(document).ready(function() { 
         var table = $('#planpackagdata').DataTable({   
             processing: true,
             serverSide: true, 
@@ -23,35 +23,63 @@
     });
         
  
- //On click, showing the popup in edit mode //   
-   $(document).on('click', '.add-modal', function() {
-		 var plan = $(this).data('info') 
-		  $.ajax({
-	        type: "get",
-			data:{},
-	        url:"/admin/planpackage/edit/"+plan,
-	        
-	    }).done(function(data) {
-				console.log(data); 
-				$("#edithtml").html(data.htmlcontent); 
-				$('#myModalPlan').modal('show');; 
-	    }); 	
-	});
+
+ //display modal form for creating new product *********************
+    $('#btn_add').click(function(){
+        
+        $('#planpackageform').trigger("reset");
+        $('#mymodel').modal('show');
+    });
+	
+	  
+	 $('#btn-save').click(function(){
+        
+				var $this = $(this);
+				var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+				if ($(this).html() !== loadingText) {
+				  $this.data('original-text', $(this).html());
+				  $this.html(loadingText);
+				}
+				setTimeout(function() {
+				  $this.html($this.data('original-text'));
+				}, 2000);
+    });
+
+ //display modal form for Package EDIT ***************************
+    $(document).on('click','.edit-modal',function(){
        
- //On click, showing the popup in edit mode //   
-   $(document).on('click', '.edit-modal', function() {
-		 var plan = $(this).data('info') 
-		  $.ajax({
-	        type: "get",
-			data:{},
-	        url:"/admin/planpackage/edit/"+plan,
-	        
-	    }).done(function(data) {
-				console.log(data); 
-				$("#edithtml").html(data.htmlcontent); 
-				$('#myModalPlan').modal('show');; 
-	    }); 	
-	});
+	   //get base URL *********************
+		var url = $('#hdnurl').val();
+
+        var informid = $(this).data('info') ;
+		var actilnurl =   url + '/update/' + informid; 
+		 $('#planpackageform').attr('action', actilnurl);
+        // Populate Data in Edit Modal Form
+        $.ajax({
+            type: "GET",
+            url: url + '/show/' + informid,
+            success: function (data) {
+                console.log(data);
+                $('#hdnpkgid').val(data.id);
+                $('#plan_type').val(data.plan_id);
+                $('#price_month').val(data.price_month);
+				$('#price_yearly').val(data.price_yearly);
+				$('#trial_days').val(data.trial_days);
+				$('#users_allowed').val(data.users_allowed);
+				$('#users_limit').val(data.users_limit); 
+				if(data.have_trial == '1'){ $('#have_trial').prop('checked', true); } 
+				if(data.support_available =='1'){ $('#support_available').prop('checked', true); } 
+                $('#btn-save').val("Update");
+                $('#mymodel').modal('show');
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    });
+
+  //display modal form for creating new product *********************
+     
 	
 // For A Delete Record Popup
 

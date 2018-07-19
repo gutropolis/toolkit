@@ -82,8 +82,9 @@ Auth::routes();
 	
 	// PlanPackages
 	 Route::get('planpackage/data','Admin\AdminPlanPackageController@getdata')->name('planpackage.data');
-	 Route::get('planpackage/edit/{id}', 'Admin\AdminPlanPackageController@edit');
-	 Route::post('planpackage/update/{id}', 'Admin\AdminPlanPackageController@update')->name('planpackage.update');; 
+	 Route::get('planpackage/show/{id}', 'Admin\AdminPlanPackageController@show'); 
+	 Route::post('planpackage/update/{id}', 'Admin\AdminPlanPackageController@update')->name('planpackage.update');
+	  
 	 Route::post('planpackage/destroy/{id}','Admin\AdminPlanPackageController@destroy')->name('plans.destroy');
 	  Route::resource('planpackage','Admin\AdminPlanPackageController');
 	

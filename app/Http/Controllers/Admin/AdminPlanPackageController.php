@@ -137,138 +137,13 @@ class AdminPlanPackageController extends Controller
      * @param  \Gutropolis\PlanPackage  $planPackage
      * @return \Illuminate\Http\Response
      */
-    public function show(PlanPackage $planPackage)
+    public function show($id)
     {
-        //
+        $planpackage = $this->packagemodel->getById($id);	
+        return response()->json($planpackage);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Gutropolis\PlanPackage  $planPackage
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-         //$plan = Plans::find($id);
-		$planpackage = $this->packagemodel->getById($id);	
-		$planData =$this->planmodel->getAll();		
-		$htmlElement = ' <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="exampleModalLabel1">Edit Package</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            </div>
-                                            <form method="post" action="planpackage/update/'.$id.'"    > 
-                                            <div class="modal-body"> 
-												'. csrf_field() .'     
-
-                                                    <div class="form-group">
-																				<h5>Select Plan <span class="text-danger">*</span></h5>
-																				<div class="controls"> 
-																						<select name="plan_type" id="select" required="" class="form-control" aria-invalid="false">';
-                                                                                         if(count($planData) > 0){
-																							   $htmlElement .= '  <option value="">Choose Plan</option>';
-																								foreach ($planData as $objplan) {
-																									if($planpackage->plan_id==$objplan->id){
-																										 $htmlElement .= '	<option selected="selected" value="'.$objplan->id.'">'.$objplan->title.'</option> ';
-																									}else{
-																										$htmlElement .= '	<option value="'.$objplan->id.'">'.$objplan->title.'</option> ';
-																									}
-																								
-																								}
-																						
-																							}
-													$htmlElement .= '		         	</select>
-																						<div class="help-block"></div>
-																				</div>
-																			</div>
-																			<div class="row">
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Has Trial <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																									<div class="switch">
-																										<label>OFF';
-																										$checked='';
-																										if($planpackage->have_trial== '1'){
-																											$checked='checked="checked"';
-																										}
-																										$htmlElement .= '	<input '.$checked.' name="have_trial" value="1" type="checkbox"><span class="lever"></span>ON</label>
-																									</div>
-																							</div>
-																						</div>
-																				</div>
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Trial Interval <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								<input value="'.$planpackage->trial_days.'" name="trial_days" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
-																								<div class="help-block"></div>
-																							</div>
-																						</div>
-																				</div>
-																			</div> 
-                                                                            <div class="row">
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Monthly Price <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								<input name="price_month" value="'.$planpackage->price_month.'"  class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
-																								<div class="help-block"></div>
-																							</div>
-																						</div>
-																				</div>
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Yearly Price <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								<input name="price_yearly" value="'.$planpackage->price_yearly.'" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
-																								<div class="help-block"></div>
-																							</div>
-																						</div>
-																				</div>
-																			</div>
-																			<div class="row">
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>User Limit <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								<input name="users_limit"  value="'.$planpackage->users_limit.'"  class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
-																								<div class="help-block"></div>
-																							</div>
-																						</div>
-																				</div>
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Is Support Available <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								 <div class="switch">
-																										<label>OFF';
-																										$checked='';
-																										if($planpackage->have_trial== '1'){
-																											$checked='checked="checked"';
-																										}
-																										$htmlElement .= ' <input '.$checked.'   value="1" name ="support_available" type="checkbox"><span class="lever"></span>ON</label>
-																								 </div>
-																							</div>
-																						</div>
-																				</div>
-																			</div> 
-																		 
-                                                    
-                                                 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                 
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                          </form> 
-                                        </div>';
- 
-		return response()->json(array('htmlcontent'=> $htmlElement));
-    }
-
+   
     /**
      * Update the specified resource in storage.
      *
@@ -309,4 +184,24 @@ class AdminPlanPackageController extends Controller
 			Toastr::success('Package have deleted successfully!!', 'Package', ["positionClass" => "toast-top-right"]); 		
 			return redirect()->route('admin.planpackage.index');
     }
+	
+	public function checkValidation(Request $request ){
+		
+		$validator = \Validator::make($request->all(),[
+		                'plan_id' => 'required',
+						'have_trial' => 'required',
+						'trial_days' => 'required|numeric', 
+						'price_month' => 'required|numeric', 
+						'price_yearly' => 'required|numeric', 
+						'users_limit' => 'required'    
+						 
+					]);
+        
+        if ($validator->fails())
+        {
+            return response()->json([ 'status'=>'0',   'errors'=>$validator->errors()->all()]);
+        }else{
+			 return response()->json([ 'status'=>'1'] );
+		}
+	}
 }
