@@ -2,6 +2,8 @@
 
 namespace Gutropolis;
 
+use Gutropolis\PlanPackage;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Plans extends Model
@@ -12,29 +14,6 @@ class Plans extends Model
        'id', 'title', 'description'
     ];
 	
-	 public function getAll()
-
-    {
-
-        return static::all();
-
-    }
-
-
-    public function findUser($id)
-
-    {
-
-        return static::find($id);
-
-    }
-
-
-    public function deleteUser($id)
-
-    {
-
-        return static::find($id)->delete();
-
-    }
+    
+	 
 }

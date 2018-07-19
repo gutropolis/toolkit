@@ -87,7 +87,7 @@
                                 <li> <a class="has-arrow" href="#" aria-expanded="false">Plans Management</a>
                                     <ul aria-expanded="false" class="collapse">
                                         <li><a href="{{'admin.plans.index'}}">Plan</a></li>
-                                        <li><a href="{{ route('admin.plan.index') }}">Plan Type</a></li> 
+                                        <li><a href="{{ route('admin.planpackage.index') }}">Plan Type</a></li> 
                                     </ul>
                                 </li>
                                  <li> <a class="has-arrow" href="#" aria-expanded="false">Packages</a>

@@ -8,11 +8,22 @@ use Gutropolis\Plans;
 use Yajra\DataTables\DataTables;
 use DB;  
 use URL;
-use Toastr;
+use Toastr; 
+use Gutropolis\Repositories\Contracts\PlanRepositoryInterface;
+use Gutropolis\Repositories\PlansRepository;
+use Illuminate\Database\Eloquent\Model;
 
 class AdminPlanController extends Controller
 {
     //
+  // space that we can use the repository from
+   protected $model;
+
+   public function __construct(Plans $plan)
+   {
+       // set the model
+       $this->model = new PlansRepository($plan);
+   }
 
     public function index(Request $request) 
     {  
@@ -22,8 +33,9 @@ class AdminPlanController extends Controller
     }
     public function data()
     {
-         
-         $plan = Plans::all();  
+         $plan =$this->model->getAll();
+		 
+         //$plan = Plans::all();  
 		  return DataTables::of($plan)
 							->editColumn('created_at',function(Plans $plan) {
 								return $plan->created_at->diffForHumans();
@@ -48,31 +60,40 @@ class AdminPlanController extends Controller
 
 	public function create() 
     {
+		// create record and pass in only fields that are fillable
+       //return $this->model->create($request->only($this->model->getModel()->fillable));
         return view('admin.plans.create'); 
     }
 
     public function store(Request $request) 
     { 
-        $this->validate($request, [ 
-            'title' => 'required', 
-            'description' => 'required'  
-        ]); 
-        $plans = Plans::create(['title' => $request->input('title'), 'description' => $request->input('description')]); 
-       // $plans->syncPermissions($request->input('description'));
-          Toastr::success('Plan have created successfully!!', 'Plans', ["positionClass" => "toast-top-right"]); 
+       
+		
+		$data = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description')
+        ];
+
+		// create record and pass in only fields that are fillable
+        
+		$this->model->create($data); 
+        Toastr::success('Plan have created successfully!!', 'Plans', ["positionClass" => "toast-top-right"]); 
         return redirect()->route('admin.plans.index');
+		//return response()->json('Successful added', 200); 
 
     }
 
      public function show($id) 
     { 
-		$plans = Plans::find($id);  
+		//$plans = Plans::find($id);  
+		$plans = $this->model->show($id);
         return view('admin.plans.show',compact('plans')); 
     }
 
      public function edit($id) 
     { 
-        $plan = Plans::find($id);    
+        //$plan = Plans::find($id);
+		$plan = $this->model->getById($id);		
 		$htmlElement = ' <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="exampleModalLabel1">Edit Plan</h4>
@@ -110,22 +131,22 @@ class AdminPlanController extends Controller
 
 
     public function update(Request $request, $id) 
-    { 
-        $this->validate($request, [ 
-            'title' => 'required', 
-            'description' => 'required', 
-        ]); 
-        $plan = Plans::find($id); 
-        $plan->title = $request->input('title');
-        $plan->description = $request->input('description'); 
-        $plan->save();
-		 Toastr::success('Plan have updated successfully!!', 'Plans', ["positionClass" => "toast-top-right"]); 
+    {  
+
+        $data = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description')
+        ];	
+		 
+		$this->model->update($data, $id); 
+		Toastr::success('Plan have updated successfully!!', 'Plans', ["positionClass" => "toast-top-right"]); 
         return redirect()->route('admin.plans.index'); 
     }
 
     public function destroy($id) 
     {  
-			Plans::find($id)->delete();			
+			//Plans::find($id)->delete();	
+			$this->model->delete($id); 			
 			Toastr::success('Plan have deleted successfully!!', 'Plans', ["positionClass" => "toast-top-right"]); 		
 			return redirect()->route('admin.plans.index');
     }

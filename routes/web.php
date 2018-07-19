@@ -77,30 +77,31 @@ Auth::routes();
 		Route::post('plans/update/{id}', 'Admin\AdminPlanController@update')->name('plans.update');; 
 		Route::get('plans/getdata', 'Admin\AdminPlanController@data')->name('plans.getdata'); 
 		Route::post('plans/destroy/{id}','Admin\AdminPlanController@destroy')->name('plans.destroy');
-		
-	//Plan Management End Here//
+		 
+	
+	
+	// PlanPackages
+	 Route::get('planpackage/data','Admin\AdminPlanPackageController@getdata')->name('planpackage.data');
+	 Route::get('planpackage/edit/{id}', 'Admin\AdminPlanPackageController@edit');
+	 Route::post('planpackage/update/{id}', 'Admin\AdminPlanPackageController@update')->name('planpackage.update');; 
+	 Route::post('planpackage/destroy/{id}','Admin\AdminPlanPackageController@destroy')->name('plans.destroy');
+	  Route::resource('planpackage','Admin\AdminPlanPackageController');
+	
+
 	
 	//Work For Packages Management 
 		Route::resource('package-feature','Admin\AdminPackageFeaturesController');
 		Route::get('package-feature/destroy/{id}','Admin\AdminPackageFeaturesController@destroy')->name('package-feature.destroy');
-	//Package Management//
+	 
 	
-	//Plan Management Start Here// Route::resource('plan', 'Admin\AdminPlanPackagesController');
-		Route::get('plan/{id}', 'Admin\AdminPlanPackagesController@show');
-		Route::get('editPlan/{id}', 'Admin\AdminPlanPackagesController@edit');
-		Route::get('update', 'Admin\AdminPlanPackagesController@update');
-		Route::post('update', 'Admin\AdminPlanPackagesController@update');
-		Route::get('destroy/{id}', 'Admin\AdminPlanPackagesController@destroy')->name('plan.destroy');;
-		Route::get('datatable/getdata', 'Admin\AdminPlanPackagesController@data')->name('datatable/getdata');
-	//Plan Mangement End Here//
+ 
 	
 	
 	
     Route::resource('users','Admin\AdminUserController');
 	Route::get('users/data','Admin\AdminUserController@data')->name('users.data');
 
-
-	Route::resource('plan', 'Admin\AdminPlanPackagesController');
+ 
 	  
 }); 
 Route::prefix('admin')->group(function () { 

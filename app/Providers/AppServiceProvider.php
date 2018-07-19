@@ -24,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+			$this->app->bind('Gutropolis\Repositories\Contracts\PlanRepositoryInterface', 'Gutropolis\Repositories\PlansRepository');
+			$this->app->bind('Gutropolis\Repositories\Contracts\PlanPackageRepositoryInterface', 'Gutropolis\Repositories\PlanPackageRepository');
     }
 }
