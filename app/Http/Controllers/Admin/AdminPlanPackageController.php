@@ -155,7 +155,8 @@ class AdminPlanPackageController extends Controller
     {
         //
 		
-			$editdata = ['plan_id' => $request->input('plan_type'),
+			$editdata = [
+			            'plan_id' => $request->input('plan_type'),
 						'have_trial' => $request->input('have_trial'),
 						'trial_days' => intval($request->input('trial_days')),
 						'price_month' => $request->input('price_month'),
