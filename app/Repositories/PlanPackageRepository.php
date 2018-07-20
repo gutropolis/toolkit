@@ -55,7 +55,13 @@ class PlanPackageRepository  implements PlanPackageRepositoryInterface
             return '';
         }
  
-
+         // Get all instances of model
+        public function getIdBySlug($slug)
+        {
+			$pkgArr =  $this->model->select('id')->where('slug', $slug)->first();
+			return $pkgArr->id;
+             
+        }
         
 }
 ?>

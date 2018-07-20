@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use DB;  
 use URL;
-use Toastr; 
-use Gutropolis\Repositories\Contracts\PlanPackageRepositoryInterface;
+use Toastr;  
 use Gutropolis\Repositories\PlanPackageRepository; 
 use Gutropolis\Repositories\PlansRepository;
 

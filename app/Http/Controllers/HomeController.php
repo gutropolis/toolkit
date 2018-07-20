@@ -4,17 +4,32 @@ namespace Gutropolis\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Gutropolis\Repositories\PlanPackageRepository; 
+use Gutropolis\Repositories\PlansRepository;
+
+use Gutropolis\PlanPackage;
+use Gutropolis\Plans;
+
+
+
+
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+   
+   
+   
+	// space that we can use the repository from
+   protected $packagemodel;
+	protected $planmodel;
+
+   public function __construct(PlanPackage $package,Plans $plan)
+   {
+       // set the model
+        $this->packagemodel = new PlanPackageRepository($package);
+		$this->planmodel = new PlansRepository($plan);
+ 
+   }
+
 
     /**
      * Show the application dashboard.
@@ -23,6 +38,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+		$planpkgData =$this->packagemodel->getAll(); 
+		
+		$slug='abc';
+		$pkgid  =$this->packagemodel->getIdBySlug($slug);
+		
+		return view('front.home.index',compact('planpkgData')); 
     }
 }

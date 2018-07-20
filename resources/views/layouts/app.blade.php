@@ -48,8 +48,8 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper">
-	    @include('admin.includes.topbar')
-		@include('admin.includes.leftside')
+	     
+		 
 		<!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">

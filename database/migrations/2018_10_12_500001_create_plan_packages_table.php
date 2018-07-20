@@ -16,7 +16,8 @@ class CreatePlanPackagesTable extends Migration
         Schema::create('plan_packages', function (Blueprint $table) {
             $table->increments('id'); 
 			$table->integer('plan_id')->unsigned();
-			$table->foreign('plan_id')->references('id')->on('plan')->onDelete('cascade');
+			$table->foreign('plan_id')->references('id')->on('plan')->onDelete('cascade'); 
+			$table->string('slug')->unique();
             $table->integer('package_type')->nullable(); 
             $table->double('price_month')->nullable();
             $table->double('price_yearly')->nullable();
