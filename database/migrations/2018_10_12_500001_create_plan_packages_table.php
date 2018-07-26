@@ -23,9 +23,11 @@ class CreatePlanPackagesTable extends Migration
             $table->double('price_yearly')->nullable();
             $table->integer('have_trial')->nullable();
 			$table->integer('trial_days')->nullable();
+		    $table->integer('interval')->default('0'); 
             $table->integer('users_allowed')->nullable();
 			$table->integer('users_limit')->nullable(); 
             $table->integer('support_available')->nullable();
+			$table->tinyInteger('status')->default('1'); 
             $table->integer('created_by')->nullable();
             $table->timestamps();
 			$table->softDeletes();

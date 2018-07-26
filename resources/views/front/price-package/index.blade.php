@@ -42,7 +42,8 @@
 								@endforeach	
                                      
                                 </div>
-							 <!-- Price End Here -----------------> 
+							 <!-- Price End Here ----------------->
+                </div>
             </div>
         </div>
     </div>

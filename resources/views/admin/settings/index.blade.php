@@ -40,7 +40,7 @@
                                         <ul class="list-group list-group-full">
                                             <li class="list-group-item active"> <a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> Inbox </a><span class="badge badge-success ml-auto">6</span></li>
                                             <li class="list-group-item">
-                                                <a href="javascript:void(0)"> <i class="mdi mdi-star"></i> Starred </a>
+                                                <a href="/admin/emailtemplate"> <i class="mdi mdi-star"></i> Email Template </a>
                                             </li>
                                             <li class="list-group-item">
                                                 <a href="javascript:void(0)"> <i class="mdi mdi-send"></i> Draft </a><span class="badge badge-danger ml-auto">3</span></li>
@@ -79,264 +79,249 @@
 															<div class="card-body p-b-0">
 															 <!-- Nav tabs -->
 															<ul class="nav nav-tabs customtab" role="tablist">
-																<li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#home2" role="tab" aria-selected="true"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Home</span></a> </li>
-																<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile2" role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Profile</span></a> </li>
-																<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages2" role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>
+																<li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#home2" role="tab" aria-selected="true"><span><i class="fa fa-spin fa-cog"></i></span> <span class="hidden-xs-down">Display Settings</span></a> </li>
+																<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile2" role="tab" aria-selected="false"><span ><i class="mdi mdi-account-settings-variant"></i></span> <span class="hidden-xs-down">Company Settings</span></a> </li>
+																<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages2" role="tab" aria-selected="false"><span ><i class="mdi mdi-email-secure"></i></span> <span class="hidden-xs-down">Outgoing Server</span></a> </li>
 															</ul>
 															<!-- Tab panes -->
 															<div class="tab-content">
 																<div class="tab-pane active show" id="home2" role="tabpanel">
 																	<!-- Tab Start Here -->
-																		 
-																		<form class="m-t-40" novalidate>
+																	
+																		 {!! Form::open(array('route' => 'admin.settings.store','method'=>'POST','name'=>'gsettingform','id'=>'gsettingform','class'=>'m-t-40','files'=>true, 'novalidate')) !!}
+																		
+									    										<div class="form-group">
+													                        <div class="card">
+													                            <div class="card-body">
+													                                <h4 class="card-title">File Upload1</h4>
+													                                <label for="input-file-now">Your so fresh input file — Default version</label>
+													                                <input type="file" id="input-file-now" name="logo"  class="dropify" data-default-file="/admin/images/upload/{{$mydata['logo'] or ''}}" />
+
+													                               <input type="hidden" value="{{$mydata['logo'] or ''}}" name="img"/>
+													                            </div>
+													                        </div>
+													                    </div>		
+																			
 																			<div class="form-group">
-																				<h5>Basic Text Input <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" name="text" class="form-control" required data-validation-required-message="This field is required"> </div>
-																				<div class="form-control-feedback"><small>Add <code>required</code> attribute to field for required validation.</small></div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Email Field <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="email" name="email" class="form-control" required data-validation-required-message="This field is required"> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Password Input Field <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="password" name="password" class="form-control" required data-validation-required-message="This field is required"> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Repeat Password Input Field <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="password" name="password2" data-validation-match-match="password" class="form-control" required> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>File Input Field <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="file" name="file" class="form-control" required> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Input with Icon <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<div class="input-group">
-																						<input type="text" class="form-control" placeholder="Addon To Right" data-validation-required-message="This field is required">
-																						<div class="input-group-append">
-																							<span class="input-group-text">$</span>
+																							<h5>Show Logo in home page <span class="text-danger">*</span></h5>
+																							<div class="controls">
+																								 <div class="switch">
+																										<label>OFF
+																											<input   id="show_logo_home"   value="1" name ="show_logo_home" type="checkbox" {{(!empty($mydata['show_logo_home']) == 1) ? 'checked' : '' }}><span class="lever"></span>ON</label>
+																								 </div>
+																							</div>
 																						</div>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Maximum Character Length <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" name="maxChar" class="form-control" required data-validation-required-message="This field is required" maxlength="10">
-																				</div>
-																				<div class="form-control-feedback"><small>Add <code>maxlength='10'</code> attribute for maximum number of characters to accept. </small></div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Minimum Character Length <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" name="minChar" class="form-control" required data-validation-required-message="This field is required" minlength="6">
-																				</div>
-																				<div class="form-control-feedback"><small>Add <code>minlength="6"</code> attribute for minimum number of characters to accept.</small></div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Only Numbers <span class="text-danger">*</span></h5>
-																				<div class="input-group">
-																					<div class="input-group-prepend">
-																						<span class="input-group-text">$</span>
-																					</div>
-																					<input type="number" name="onlyNum" class="form-control" required data-validation-required-message="This field is required">
-																					<div class="input-group-append">
-																						<span class="input-group-text">.00</span>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Maximum Number <span class="text-danger">*</span></h5>
-																				<input type="text" name="maxNum" class="form-control" required data-validation-required-message="This field is required" max="25">
-																				<div class="form-control-feedback"> <small><i>Must be lower than 25</i></small> - <small>Add <code>max</code> attribute for maximum number to accept. Also use <code>data-validation-max-message</code> attribute for max failure message</small> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Minimum Number <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" name="minNum" class="form-control" required data-validation-required-message="This field is required" min="10">
-																				</div>
-																				<div class="form-control-feedback"><small><i>Must be higher than 10</i></small> - <small>Add <code>min</code> attribute for minimum number to accept. Also use <code>data-validation-min-message</code> attribute for min failure message</small></div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Text Input Range <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" name="text" class="form-control" required data-validation-required-message="This field is required" minlength="10" maxlength="20" placeholder="Enter number between 10 &amp; 20"> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Input with Button <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<div class="input-group">
-																						<input type="text" class="form-control" placeholder="Search" required>
-																						<div class="input-group-append">
-																							<button class="btn btn-info" type="button">Go!</button>
+																						<div class="form-group">
+																							<h5>Show Logo in application <span class="text-danger">*</span></h5>
+																							<div class="controls">
+																								 <div class="switch">
+																										<label>OFF
+																											<input   id="show_logo_application"   value="1" name ="show_logo_application" type="checkbox" {{(!empty($mydata['show_logo_application']) == 1) ? 'checked' : ''}}><span class="lever"></span>ON</label>
+																								 </div>
+																							</div>
 																						</div>
-																					</div>
-																				</div>
+																						<div class="form-group">
+																							<h5>Show Logo in pdf <span class="text-danger">*</span></h5>
+																							<div class="controls">
+																								 <div class="switch">
+																										<label>OFF
+																											<input   id="show_logo_pdf"   value="1" name ="show_logo_pdf" type="checkbox" {{(!empty($mydata['show_logo_pdf'])== 1) ? 'checked' : ''}} ><span class="lever"></span>ON</label>
+																								 </div>
+																							</div>
+																						</div>
+
+																			<div class="form-group">
+																				<h5>Application Name<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					
+
+																					<input type="text" name="application_name" value="{{ $mydata['application_name']  or ''}}" placeholder="Application Name" class="form-control" required data-validation-required-message="Application name is required"> </div>
+																				
 																			</div>
 																			<div class="form-group">
-																				<h5>No Characters, Only Numbers <span class="text-danger">*</span></h5>
+																				<h5>Login Background image<span class="text-danger">*</span></h5>
 																				<div class="controls">
-																					<input type="text" name="noChar" class="form-control" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers"> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Pattern <span class="text-danger">*</span> <small><i>Must start with 'a' and end with 'z'</i></small></h5>
-																				<div class="controls">
-																					<input type="text" name="pattern" pattern="a.*z" data-validation-pattern-message="Must start with 'a' and end with 'z'" class="form-control" required>
-																					<div class="form-control-feedback"><small>Add <code>pattern</code> attribute to set input pattern. Also use <code>data-validation-pattern-message</code> attribute for pattern failure message</small></div>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Enter URL <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" class="form-control" placeholder="Add URL" data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*" data-validation-regex-message="Only Valid URL's">
-																					<div class="form-control-feedback"><small>Add <code>data-validation-regex-regex</code> attribute for regular expression. Also use <code>data-validation-regex-message</code> attribute for regex failure message</small></div>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Enter Email Address <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" class="form-control" placeholder="Email Address" data-validation-regex-regex="([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})" data-validation-regex-message="Enter Valid Email"> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Enter Date <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<input type="text" class="form-control" placeholder="MM/DD/YYYY" data-validation-regex-regex="([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})" data-validation-regex-message="Enter Valid Email"> </div>
-																			</div>
-																			<div class="form-group">
-																				<h5>Basic Select <span class="text-danger">*</span></h5>
-																				<div class="controls">
-																					<select name="select" id="select" required class="form-control">
-																						<option value="">Select Your City</option>
-																						<option value="1">India</option>
-																						<option value="2">USA</option>
-																						<option value="3">UK</option>
-																						<option value="4">Canada</option>
-																						<option value="5">Dubai</option>
+																					<select name="login_background_image" class="form-control" required data-validation-required-message="This field is required">
+																						<option value="">Choose Value </option>
+																					
+																						<option value="abc" {{(!empty($mydata['login_background_image']) =='abc') ? 'selected' : ''}}>abc.jpg</option>
+																						<option value="cdf" {{(!empty($mydata['login_background_image'])=='cdf') ? 'selected' : ''}}>cdf.jpg</option>
+																						<option value="zys" {{(!empty($mydata['login_background_image'] )=='zys') ? 'selected' : ''}}>zys.jpg</option>
 																					</select>
-																				</div>
+																					 </div>
 																			</div>
 																			<div class="form-group">
-																				<h5>Textarea <span class="text-danger">*</span></h5>
+																				<h5>Sidebar Background image<span class="text-danger">*</span></h5>
 																				<div class="controls">
-																					<textarea name="textarea" id="textarea" class="form-control" required placeholder="Textarea text"></textarea>
-																				</div>
+																					<select name="side_bar_background_image" class="form-control" required data-validation-required-message="This field is required">
+																						<option value="">Choose Value </option>
+																						<option value="xyz"  {{(!empty($mydata['side_bar_background_image']) =='xyz') ? 'selected' : ''}}>xyz.jpg</option>
+																						<option value="znd"  {{(!empty($mydata['side_bar_background_image']) =='znd') ? 'selected' : ''}}>znd.jpg</option>
+																						<option value="trv"  {{(!empty($mydata['side_bar_background_image']) =='trv') ? 'selected' : ''}}>trv.jpg</option>
+																					</select>
+																					 </div>
 																			</div>
-																			<div class="row">
-																				<div class="col-md-6">
-																					<div class="form-group">
-																						<h5>Checkbox <span class="text-danger">*</span></h5>
-																						<div class="controls">
-																							<label class="custom-control custom-checkbox">
-																								<input type="checkbox" required value="single" name="styled_single_checkbox" class="custom-control-input"><span class="custom-control-label">Check this custom checkbox</span> </label>
-																						</div>
-																					</div>
-																				</div>
-																				<div class="col-md-6">
-																					<div class="form-group">
-																						<h5>Checkbox Group <span class="text-danger">*</span></h5>
-																						<div class="controls">
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" value="x" name="styled_checkbox" required class="custom-control-input"><span class="custom-control-label">I am unchecked Checkbox</span> </label>
-																							</fieldset>
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" value="y" name="styled_checkbox" class="custom-control-input"><span class="custom-control-label">I am unchecked too</span> </label>
-																							</fieldset>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="row">
-																				<div class="col-md-6">
-																					<div class="form-group">
-																						<h5>Select Max 2 Checkbox<span class="text-danger">*</span></h5>
-																						<div class="controls">
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" name="styled_max_checkbox" data-validation-maxchecked-maxchecked="2" data-validation-maxchecked-message="Don't be greedy!" required class="custom-control-input"><span class="custom-control-label">I am unchecked Checkbox</span> </label>
-																							</fieldset>
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" name="styled_max_checkbox" class="custom-control-input"><span class="custom-control-label">I am unchecked too</span> </label>
-																							</fieldset>
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" name="styled_max_checkbox" class="custom-control-input"><span class="custom-control-label">You can check me</span> </label>
-																							</fieldset>
-																						</div> <small>Select any 2 options</small> </div>
-																				</div>
-																				<div class="col-md-6">
-																					<div class="form-group">
-																						<h5>Minimum 2 Checkbox selection<span class="text-danger">*</span></h5>
-																						<div class="controls">
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" value="1" data-validation-minchecked-minchecked="2" data-validation-minchecked-message="Choose at least two" name="styled_min_checkbox" required class="custom-control-input"><span class="custom-control-label">I am unchecked Checkbox</span> </label>
-																							</fieldset>
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" value="2" name="styled_min_checkbox" class="custom-control-input"><span class="custom-control-label">I am unchecked too</span> </label>
-																							</fieldset>
-																							<fieldset>
-																								<label class="custom-control custom-checkbox">
-																									<input type="checkbox" value="3" name="styled_min_checkbox" class="custom-control-input"><span class="custom-control-label">You can check me</span> </label>
-																							</fieldset>
-																						</div> <small>Select any 2 options</small> </div>
-																				</div>
-																			</div>
-																			<div class="row">
-																				<div class="col-md-6">
-																					<div class="form-group">
-																						<h5>Radio Buttons <span class="text-danger">*</span></h5>
-																						<fieldset class="controls">
-																							<label class="custom-control custom-radio">
-																								<input type="radio" value="1" name="styled_radio" required id="styled_radio1" class="custom-control-input"><span class="custom-control-label">Check Me</span> </label>
-																						</fieldset>
-																						<fieldset>
-																							<label class="custom-control custom-radio">
-																								<input type="radio" value="2" name="styled_radio" id="styled_radio2" class="custom-control-input"><span class="custom-control-label">Or Me</span> </label>
-																						</fieldset>
-																					</div>
-																				</div>
-																				<div class="col-md-6">
-																					<div class="form-group">
-																						<h5>Inline Radio Buttons <span class="text-danger">*</span></h5>
-																						<div class="controls">
-																							<fieldset>
-																								<label class="custom-control custom-radio">
-																									<input type="radio" value="Yes" name="styled_inline_radio" required id="styled_radio_inline1" class="custom-control-input"><span class="custom-control-label">Check Me</span> </label>
-																							</fieldset>
-																							<fieldset>
-																								<label class="custom-control custom-radio">
-																									<input type="radio" value="No" name="styled_inline_radio" id="styled_radio_inline2" class="custom-control-input"><span class="custom-control-label">Or Me</span> </label>
-																							</fieldset>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
+																			<input type="hidden" name="group" value="1"/>
 																			<div class="text-xs-right m-b-40">
-																				<button type="submit" class="btn btn-info">Submit</button>
+																				<button type="submit" id="btn-save" class="btn btn-primary">Submit</button>
 																				<button type="reset" class="btn btn-inverse">Cancel</button>
 																			</div>
-																		</form>
+																		{!! Form::close() !!}
 																	<!-- Tab End here  ------>
 																</div>
 																<div class="tab-pane p-20" id="profile2" role="tabpanel">
 																<!-- Tab Start Here -->
-																	2
+																	 {!! Form::open(array('route' => 'admin.settings.csettingstore','method'=>'POST','name'=>'csettingform','id'=>'csettingform','class'=>'m-t-40', 'novalidate')) !!}
+																			
+																			<div class="form-group">
+																				<h5>Company Name<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="company_name" value="{{ $mydata['company_name'] or '' }}" placeholder="Company Name" class="form-control" required data-validation-required-message="Company name is required"> </div>
+																				
+																			</div>
+																			
+																			
+																			<div class="form-group">
+																				<h5>Address<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<textarea name="caddress" rows="5"  placeholder="Enter the address" class="form-control" required data-validation-required-message="Address is required">{{ $mydata['caddress'] or '' }}</textarea> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>City<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="city" value="{{ $mydata['city']  or '' }}" placeholder="City" class="form-control" required data-validation-required-message="City is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>State<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="state" placeholder="state" value="{{ $mydata['state'] or '' }}" class="form-control" required data-validation-required-message="state is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Postal Code<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="postal_code" value="{{ $mydata['postal_code'] or '' }}" placeholder="Postal Code" class="form-control" required data-validation-required-message="Postal code is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Country<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="country" value="{{ $mydata['country']  or '' }}" placeholder="Country" class="form-control" required data-validation-required-message="Country is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Phone<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="phone" value="{{ $mydata['phone']  or '' }}"  placeholder="Phone" class="form-control" required data-validation-required-message="Phone is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Fax<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="fax" value="{{ $mydata['fax']  or ''}}" placeholder="Fax" class="form-control" required data-validation-required-message="Fax is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Website<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="website" value="{{ $mydata['website'] or '' }}" placeholder="Website" class="form-control" required data-validation-required-message="Website is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Vat ID<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="vatid" value="{{ $mydata['vatid']  or ''}}" placeholder="Vat ID" class="form-control" required data-validation-required-message="Vat is required"> </div>
+																				
+																			</div>
+																				<input type="hidden" name="group" value="2"/>
+
+																			<div class="text-xs-right m-b-40">
+																				<button type="submit" id="btn-save" class="btn btn-primary">Submit</button>
+																				<button type="reset" class="btn btn-inverse">Cancel</button>
+																			</div>
+																		{!! Form::close() !!}
 																	<!-- Tab End here  ------>
 																</div>
 																<div class="tab-pane p-20" id="messages2" role="tabpanel">
 																<!-- Tab Start Here -->
-																	3
+																	 {!! Form::open(array('route' => 'admin.settings.outserverstore','method'=>'POST','name'=>'csettingform','id'=>'csettingform','class'=>'m-t-40', 'novalidate')) !!}
+																			
+																			<div class="form-group">
+																				<h5>Mail Driver<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="mail_driver" value="{{ $mydata['mail_driver']  or ''}}"  placeholder="Mail Driver" class="form-control" required data-validation-required-message="Mail Driver is required"> </div>
+																				
+																			</div>
+																			
+																			
+																			
+																			<div class="form-group">
+																				<h5>Mail Host<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="mail_host" value="{{ $mydata['mail_host']  or ''}}" placeholder="Mail Host" class="form-control" required data-validation-required-message="Mail host  is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Mail Port<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="mail_port" value="{{ $mydata['mail_port']  or ''}}" placeholder="Mail Port" class="form-control" required data-validation-required-message="Mail port is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Mail UserName<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="mail_username" value="{{ $mydata['mail_username']  or ''}}" placeholder="Mail UserName" class="form-control" required data-validation-required-message="Mail UserName is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Mail Password<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="mail_password" value="{{ $mydata['mail_password']  or ''}}" placeholder="Mail Password" class="form-control" required data-validation-required-message="Mail Password is required"> </div>
+																				
+																			</div>
+																			<div class="form-group">
+																				<h5>Mail Encryption<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="text" name="mail_encryption" value="{{ $mydata['mail_encryption']  or ''}}" placeholder="Mail Encryption" class="form-control" required data-validation-required-message="Mail Encryption is required"> </div>
+																				
+																			</div>
+																			
+																			<input type="hidden" name="group" value="3"/>
+
+																			<div class="text-xs-right m-b-40">
+																				<button type="submit" id="btn-save" class="btn btn-primary">Submit</button>
+																				<button type="reset" class="btn btn-inverse">Cancel</button>
+																			</div>
+																		</form>
+																		<h2>SEND TEST E-MAIL</h2>
+																		<form class="m-t-40" novalidate>
+																			
+																			<div class="form-group">
+																				<h5>E-mail<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<input type="email" name="email" placeholder="E-mail" class="form-control" required data-validation-required-message="E-mail is required"> </div>
+																				
+																			</div>
+																			
+																			
+																			
+																			<div class="form-group">
+																				<h5>E-mail Message<span class="text-danger">*</span></h5>
+																				<div class="controls">
+																					<textarea rows="10" name="email_message" placeholder="E-mail Message" class="form-control" required data-validation-required-message="Email Message  is required"></textarea>
+																				
+																			</div>
+																			
+																			
+
+
+																			<div class="text-xs-right m-b-40">
+																				<button type="submit" id="btn-save" class="btn btn-primary">Sent Test E-mail</button>
+																				<button type="reset" class="btn btn-inverse">Cancel</button>
+																			</div>
+																		{!! Form::close() !!}
 																	<!-- Tab End here  ------>
 																</div>
 															</div>
@@ -367,10 +352,57 @@
      <!--Custom JavaScript -->
 	 <script src="{{ URL::to('admin/assets/js/custom.min.js') }}"></script>
 	 <script src="{{ URL::to('admin/assets/js/validation.js') }}"></script> 
+	 <script src="{{ URL::to('admin/plugins/dropify/src/js/dropify.js') }}"></script>
     <script>
     ! function(window, document, $) {
         "use strict";
         $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
     }(window, document, jQuery);
+    </script>
+
+ <script>
+    	function displayinf()
+    	{
+    		var mydata = $('#gsettingform').serialize();
+        // alert(mydata);
+	    $.ajax({
+        type: "POST",
+        url: '/admin/settings/store',
+        data:mydata ,
+        success: function( data ) {
+        	console.log(data.id);
+        	return false;
+    	}
+    });
+	}
+</script>
+ <script>
+    $(document).ready(function() {
+        // Basic
+        $('.dropify').dropify();
+
+        // Translated
+        $('.dropify-fr').dropify({
+            messages: {
+                default: 'Glissez-déposez un fichier ici ou cliquez',
+                replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                remove: 'Supprimer',
+                error: 'Désolé, le fichier trop volumineux'
+            }
+        });
+
+        // Used events
+       
+        var drDestroy = $('#input-file-to-destroy').dropify();
+        drDestroy = drDestroy.data('dropify')
+        $('#toggleDropify').on('click', function(e) {
+            e.preventDefault();
+            if (drDestroy.isDropified()) {
+                drDestroy.destroy();
+            } else {
+                drDestroy.init();
+            }
+        })
+    });
     </script>
 @endsection 

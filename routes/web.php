@@ -13,8 +13,9 @@
 
  
 
-Route::get('/', 'HomeController@index');
-
+Route::get('/', 'Frontend\PricePackageController@index');
+Route::get('/price-package/{slug?}', 'Frontend\PricePackageController@showpricepkg')->name('price-package'); ; 
+Route::post('/payments/paynow/{slug}', 'Frontend\PricePackageController@makePayment')->name('payments.paynow'); 
 
 Auth::routes();
 
@@ -95,15 +96,55 @@ Auth::routes();
 		Route::get('package-feature/destroy/{id}','Admin\AdminPackageFeaturesController@destroy')->name('package-feature.destroy');
 	 
 	
-		//Work on website Setting
-		Route::resource('settings','Admin\AdminSettingsController');
-		 
+	 
 	 
 	
     Route::resource('users','Admin\AdminUserController');
 	Route::get('users/data','Admin\AdminUserController@data')->name('users.data');
 
- 
+     //Work on website Setting
+		Route::resource('settings','Admin\AdminSettingsController');
+		Route::get('settings/store','Admin\AdminSettingsController@store')->name('settings.store');
+		Route::post('settings/store','Admin\AdminSettingsController@store')->name('settings.store');
+		Route::post('settings/csettingstore','Admin\AdminSettingsController@csettingstore')->name('settings.csettingstore');
+		Route::post('settings/outserverstore','Admin\AdminSettingsController@outserverstore')->name('settings.outserverstore');
+
+	 
+//Work on Lead module start here
+		Route::get('lead','Admin\AdminLeadController@index')->name('lead.index');
+		Route::get('lead/data','Admin\AdminLeadController@getdata')->name('lead.data');
+		Route::get('lead/create','Admin\AdminLeadController@create')->name('lead.create');
+		Route::get('lead/store','Admin\AdminLeadController@store')->name('lead.store');
+		Route::post('lead/store','Admin\AdminLeadController@store')->name('lead.store');
+		Route::get('lead/edit/{id}','Admin\AdminLeadController@edit')->name('lead.edit');
+		Route::post('lead/edit/{id}','Admin\AdminLeadController@edit')->name('lead.edit');
+		Route::post('lead/show/{id}','Admin\AdminLeadController@show')->name('lead.show');
+		Route::get('lead/show/{id}','Admin\AdminLeadController@show')->name('lead.show');
+		Route::post('lead/update/{id}', 'Admin\AdminLeadController@update')->name('lead.update'); 
+		Route::post('lead/destroy/{id}','Admin\AdminLeadController@destroy')->name('lead.destroy');
+		// checkValidation
+		Route::get('checkvalidation','Admin\AdminLeadController@checkValidation');
+		Route::post('checkvalidation','Admin\AdminLeadController@checkValidation');
+
+//Tenant start here tenants/data
+
+		Route::get('tenant','Admin\AdminTenantController@index')->name('tenant.index');
+		Route::get('tenant/data','Admin\AdminTenantController@getdata')->name('tenant.data');
+		Route::post('tenant/store','Admin\AdminTenantController@store')->name('tenant.store');
+		Route::get('tenant/show/{id}', 'Admin\AdminTenantController@show'); 
+		Route::post('tenant/update/{id}', 'Admin\AdminTenantController@update')->name('tenant.update'); 
+		Route::post('tenant/destroy/{id}','Admin\AdminTenantController@destroy')->name('tenant.destroy');
+		Route::post('checkvalidation','Admin\AdminTenantController@checkValidation');
+
+
+
+ // Email Template
+      Route::get('emailtemplate/data','Admin\AdminEmailTemplateController@getdata')->name('emailtemplate.data'); 
+      Route::get('emailtemplate/show/{id}', 'Admin\AdminEmailTemplateController@show');
+      Route::post('emailtemplate/update/{id}', 'Admin\AdminEmailTemplateController@organizationsetting')->name('emailtemplate.update');; 
+      Route::post('emailtemplate/destroy/{id}','Admin\AdminEmailTemplateController@destroy')->name('emailtemplate.destroy');
+     Route::resource('emailtemplate','Admin\AdminEmailTemplateController');
+
 	  
 }); 
 Route::prefix('admin')->group(function () { 

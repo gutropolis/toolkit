@@ -3,17 +3,17 @@
 namespace Gutropolis\Repositories;
 
 use Gutropolis\Repositories\Contracts;
-use Gutropolis\Repositories\Contracts\PlanPackageRepositoryInterface;
-use Gutropolis\PlanPackage;
+use Gutropolis\Repositories\Contracts\EmailTemplateRepositoryInterface;
+use Gutropolis\EmailTemplate;
 
 
-class PlanPackageRepository  implements PlanPackageRepositoryInterface
+class EmailTemplateRepository  implements EmailTemplateRepositoryInterface
 {
         protected $model;
-        protected  $pkgid=0;
-        public function __construct(PlanPackage $package)
+        
+        public function __construct(EmailTemplate $emailtemplate)
         {
-                $this->model = $package;  
+                $this->model = $emailtemplate;  
         }
         
 		// Get all instances of model
@@ -55,17 +55,7 @@ class PlanPackageRepository  implements PlanPackageRepositoryInterface
             return '';
         }
  
-         // Get all instances of model
-        public function getIdBySlug($slug)
-        {
-			return     $this->model->select('id')->where('status', '=', '1')->where('slug', $slug)->first();
-			 
-        }
-		   // Get all instances of model
-        public function getPkgBySlug($slug)
-        {  
-			return $this->model->where('slug', $slug)->first();
-        }
+
         
 }
 ?>
