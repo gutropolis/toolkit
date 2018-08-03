@@ -7,17 +7,12 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'title', name: 'title' },
+				{ data: 'slug', name: 'slug' },
                 { data: 'description', name: 'description' },
                 { data: 'created_at', name:'created_at'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ],
-             columnDefs : [
-        { targets : [3],
-          render : function (data, type, row) {
-             return data == 1 ? 'Yes' : 'No'
-          }
-        }
-        ]
+             columnDefs : [ ]
         });
         table.on( 'draw', function () {
             $('.livicon').each(function(){

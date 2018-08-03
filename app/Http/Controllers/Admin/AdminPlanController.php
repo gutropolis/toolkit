@@ -2,6 +2,7 @@
 
 namespace Gutropolis\Http\Controllers\Admin;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Gutropolis\Http\Controllers\Controller;
 use Gutropolis\Plans;
@@ -11,18 +12,20 @@ use URL;
 use Toastr; 
 use Gutropolis\Repositories\Contracts\PlanRepositoryInterface;
 use Gutropolis\Repositories\PlansRepository;
-use Illuminate\Database\Eloquent\Model;
+use Gutropolis\Repositories\StripeRepository;
 
 class AdminPlanController extends Controller
 {
     //
   // space that we can use the repository from
-   protected $model;
-
+	protected $model;
+	protected $stripemodel;
+	
    public function __construct(Plans $plan)
    {
        // set the model
        $this->model = new PlansRepository($plan);
+	   $this->stripemodel = new StripeRepository();
    }
 
     public function index(Request $request) 
@@ -37,7 +40,15 @@ class AdminPlanController extends Controller
 		 
          //$plan = Plans::all();  
 		  return DataTables::of($plan)
-							->editColumn('created_at',function(Plans $plan) {
+		                   ->editColumn('slug',function(  $plan) { 
+								$slug=  $plan->slug;
+								return  $slug;						
+							}) 
+							->editColumn('description',function(  $plan) { 
+								$description=  $plan->description;
+								return  $description;						
+							})
+							->editColumn('created_at',function( $plan) {
 								return $plan->created_at->diffForHumans();
 							})
 							->addColumn('actions',function($plan) {
@@ -67,8 +78,12 @@ class AdminPlanController extends Controller
 
     public function store(Request $request) 
     { 
-       
-		
+	
+	 
+      $is_stripe_plan  = $request->input('is_stripe_plan'); 
+	  $title = $request->input('title');
+	  $description = $request->input('description');
+	  
 		$data = [
             'title' => $request->input('title'),
             'description' => $request->input('description')
@@ -76,22 +91,40 @@ class AdminPlanController extends Controller
 
 		// create record and pass in only fields that are fillable
         
-		$this->model->create($data); 
+		$result = $this->model->create($data);  
+		
+		if($is_stripe_plan=='1' &&  intval($result->id) > 0 ){ 
+		 
+					$this->stripemodel->product_name = $title; 
+					$this->stripemodel->product_type = 'service';
+					$this->stripemodel->product_description = $description;
+					$this->stripemodel->product_attribute =  ["size", "gender"]; 										  
+					$this->stripemodel->makeStripePlan();  
+					$stripe_product_id  =$this->stripemodel->product_id;	
+					 
+					if($stripe_product_id!=''){
+						$data['stripe_plan_id'] = $stripe_product_id;
+						$this->model->update(  $data, $result->id);
+					}				
+	    }
+		
         Toastr::success('Plan have created successfully!!', 'Plans', ["positionClass" => "toast-top-right"]); 
         return redirect()->route('admin.plans.index');
 		//return response()->json('Successful added', 200); 
 
     }
 
-     public function show($id) 
+    public function show($id) 
     { 
 		//$plans = Plans::find($id);  
 		$plans = $this->model->show($id);
         return view('admin.plans.show',compact('plans')); 
     }
 
-     public function edit($id) 
+    public function edit($id) 
     { 
+	    $striperResult =  $this->stripemodel->getStripePlan();	
+		 
         //$plan = Plans::find($id);
 		$plan = $this->model->getById($id);		
 		$htmlElement = ' <div class="modal-content">
@@ -109,12 +142,27 @@ class AdminPlanController extends Controller
                                                          
                                                     </div>
                                                      <div class="form-group">
-														<h5>Textarea <span class="text-danger">*</span></h5>
+														<h5>Description <span class="text-danger">*</span></h5>
 														<div class="controls">
 															<textarea name="description"  id="description" class="form-control" required="" placeholder="Put Description" aria-invalid="false">'.$plan->description .'</textarea>
 														<div class="help-block"></div></div>
 													</div>
-
+													<div class="form-group">
+														<h5>Stripe Plans </h5>
+														<div class="controls">
+															 <select name="stripe_plan_id" id="stripe_plan_id" required="" class="form-control" aria-invalid="false">';
+																 	
+                                                                   if(count($striperResult) > 0){
+																	   $htmlElement .= '<option value="">Choose Plan</option>';
+                                                                        foreach($striperResult->data as $stripePlan){
+																			$selected='';
+																			 if($plan->stripe_plan_id==$stripePlan->id){$selected='selected'; }
+																			 $htmlElement .= '<option value="'.$stripePlan->id.'" '.$selected.' >'.$stripePlan->name.'</option>';
+																		}
+																   }	 
+		$htmlElement .= '									  </select>
+														<div class="help-block"></div></div>
+													</div>
                                                     
                                                  
                                             </div>

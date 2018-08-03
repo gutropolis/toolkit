@@ -7,9 +7,9 @@ $(document).ready(function() {
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'plan_name', name: 'plan_name' },
-				{ data: 'price_month', name: 'price_month' },
-                { data: 'price_yearly', name: 'price_yearly' }, 
-				{ data: 'users_allowed', name: 'users_allowed' },
+				{ data: 'price', name: 'price' },  
+				{ data: 'package_type', name: 'package_type' },
+				{ data: 'users_limit', name: 'users_limit' },
                 { data: 'created_at', name:'created_at'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ],
@@ -62,8 +62,8 @@ $(document).ready(function() {
                 console.log(data);
                 $('#hdnpkgid').val(data.id);
                 $('#plan_type').val(data.plan_id);
-                $('#price_month').val(data.price_month);
-				$('#price_yearly').val(data.price_yearly);
+                $('#price').val(data.price);
+				$('#package_type').val(data.package_type);
 				$('#trial_days').val(data.trial_days);
 				$('#users_allowed').val(data.users_allowed);
 				$('#users_limit').val(data.users_limit); 

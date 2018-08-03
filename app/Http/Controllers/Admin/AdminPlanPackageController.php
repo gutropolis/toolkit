@@ -14,7 +14,7 @@ use Gutropolis\Repositories\PlansRepository;
 
 use Gutropolis\PlanPackage;
 use Gutropolis\Plans;
-
+use Gutropolis\Repositories\StripeRepository;
 
 class AdminPlanPackageController extends Controller
 {
@@ -22,16 +22,17 @@ class AdminPlanPackageController extends Controller
 	// space that we can use the repository from
    protected $packagemodel;
 	protected $planmodel;
+	protected $stripemodel;
 
    public function __construct(PlanPackage $package,Plans $plan)
    {
        // set the model
         $this->packagemodel = new PlanPackageRepository($package);
 		$this->planmodel = new PlansRepository($plan);
+		$this->stripemodel = new StripeRepository();
  
    }
 
-   
    
     /**
      * Display a listing of the resource.
@@ -61,15 +62,16 @@ class AdminPlanPackageController extends Controller
 								} 
 								return  $plantitle;
 							})
-							->editColumn('price_month',function( $planpackagedata) {
+							->editColumn('price',function( $planpackagedata) {
 								 
-								$price_month= '$'.$planpackagedata->price_month;
-								return  $price_month;						
-							})
-							->editColumn('price_yearly',function( $planpackagedata) {
-								$price_yearly= '$'.$planpackagedata->price_yearly; 
-								return $price_yearly;
-							})
+								$price= '$'.$planpackagedata->price;
+								return  $price;						
+							}) 
+							->editColumn('package_type',function( $planpackagedata) {
+								 
+								$package_type=  $planpackagedata->package_type;
+								return  $package_type;						
+							}) 
 							->editColumn('users_allowed',function( $planpackagedata) {
                                  
 								return  $planpackagedata->users_limit;
@@ -114,18 +116,41 @@ class AdminPlanPackageController extends Controller
     public function store(Request $request)
     {
         // 
-		$data = [   	'plan_id' => $request->input('plan_type'),
+		$is_stripe_plan  = $request->input('is_stripe_plan'); 
+		$plan_id = $request->input('plan_type');
+		$data = [   	'plan_id' => $request->input('plan_type'), 
 						'have_trial' => $request->input('have_trial'),
+						'package_type' => $request->input('package_type'),
 						'trial_days' => intval($request->input('trial_days')),
-						'price_month' => $request->input('price_month'),
-						'price_yearly' => $request->input('price_yearly'),
+						'price' => $request->input('price'), 
 						'users_limit' => $request->input('users_limit'),
 						'support_available' => intval($request->input('support_available')) 
 				];
+				
+			
+			$planDetail = $this->planmodel->getById($plan_id);
 
 		// create record and pass in only fields that are fillable
         
-		$this->packagemodel->create($data); 
+		$result =$this->packagemodel->create($data); 
+		if($is_stripe_plan=='1' &&  intval($result->id) > 0 ){ 
+				$price = $request->input('price');
+				$this->stripemodel->package_amount = $price*100;
+				$this->stripemodel->package_interval = $request->input('package_type');
+				$this->stripemodel->package_interval_count = '1';
+				$this->stripemodel->package_currency = 'usd';
+				$this->stripemodel->package_id  = $result->slug;
+				$this->stripemodel->product_id = $planDetail->stripe_plan_id;
+				$this->stripemodel->makeStripePackage();
+				$this->stripemodel->package_id;
+				if($this->stripemodel->package_id !=''){
+					
+						$data['stripe_package_id'] = $this->stripemodel->package_id;
+						$this->packagemodel->update(  $data, $result->id);
+				 }	
+		 
+		
+		}
         Toastr::success('Plan Package have created successfully!!', 'Plan Package', ["positionClass" => "toast-top-right"]); 
         return redirect()->route('admin.planpackage.index');
     }
@@ -157,9 +182,9 @@ class AdminPlanPackageController extends Controller
 			$editdata = [
 			            'plan_id' => $request->input('plan_type'),
 						'have_trial' => $request->input('have_trial'),
+						'package_type' => $request->input('package_type'),
 						'trial_days' => intval($request->input('trial_days')),
-						'price_month' => $request->input('price_month'),
-						'price_yearly' => $request->input('price_yearly'),
+						'price' => $request->input('price'), 
 						'users_limit' => $request->input('users_limit'),
 						'support_available' => intval($request->input('support_available')) 
 					];
@@ -191,8 +216,7 @@ class AdminPlanPackageController extends Controller
 		                'plan_id' => 'required',
 						'have_trial' => 'required',
 						'trial_days' => 'required|numeric', 
-						'price_month' => 'required|numeric', 
-						'price_yearly' => 'required|numeric', 
+						'price' => 'required|numeric',  
 						'users_limit' => 'required'    
 						 
 					]);

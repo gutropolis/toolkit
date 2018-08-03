@@ -53,6 +53,7 @@
 												<tr>
 													<th>id</th>
 													<th>Plan Name</th>
+													<th>Slug</th>
 													<th>Description</th> 
 													<th>Created</th>
 													<th>Action</th>
@@ -71,24 +72,41 @@
 																	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 																</div>
 																{!! Form::open(array('route' => 'admin.plans.store','method'=>'POST','name'=>'planform','id'=>'planform')) !!}
-																<div class="modal-body">
-																	
-																		 
-
+																<div class="modal-body"> 
 																		 <div class="form-group">
 																			<label for="title" class="control-label">Title:</label>
-																			<input name="title" class="form-control" required="" data-validation-required-message="Title is required" aria-invalid="false" type="text">
-																			 
+																			<input name="title" class="form-control" required="" data-validation-required-message="Title is required" aria-invalid="false" type="text"> 
 																		</div>
 																		 <div class="form-group">
-																			<h5>Textarea <span class="text-danger">*</span></h5>
+																			<h5>description <span class="text-danger">*</span></h5>
 																			<div class="controls">
 																				<textarea name="description" id="description" class="form-control" required="" placeholder="Put Description" aria-invalid="false"></textarea>
 																			<div class="help-block"></div></div>
-																		</div>
-
-																		
-																	 
+																		</div>  
+																		<div class="row">
+																				<div class="col-xs-12 col-sm-6 col-md-6">
+																						<div class="form-group">
+																							<h5>Make Stripe Plan <span class="text-danger">*</span></h5>
+																							<div class="controls">
+																									<div class="switch">
+																										<label>No
+																											<input id="have_trial" name="is_stripe_plan" value="1" type="checkbox"><span class="lever"></span>Yes</label>
+																									</div>
+																							</div>
+																						</div>
+																				</div>
+																				<div class="col-xs-12 col-sm-6 col-md-6">
+																						<div class="form-group">
+																							<h5>Make Razor Plan <span class="text-danger">*</span></h5>
+																							<div class="controls">
+																									<div class="switch">
+																										<label>No
+																											<input id="have_trial" name="is_razor_plan" value="1" type="checkbox"><span class="lever"></span>Yes</label>
+																									</div>
+																							</div>
+																						</div>
+																				</div>
+																		 </div>
 																</div>
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -13,9 +13,22 @@
 
  
 
-Route::get('/', 'Frontend\PricePackageController@index');
-Route::get('/price-package/{slug?}', 'Frontend\PricePackageController@showpricepkg')->name('price-package'); ; 
-Route::post('/payments/paynow/{slug}', 'Frontend\PricePackageController@makePayment')->name('payments.paynow'); 
+Route::get('/', 'Frontend\PlanController@index');
+Route::get('/plan/{slug?}', 'Frontend\PlanController@showpricepkg')->name('plan'); ; 
+
+//Get Payment Gateway Button Here
+Route::get('/payment-type/{slug?}/{paymethod?}/{recur?}', 'Frontend\Payment\PaymentController@index')->name('plan.gateway'); 
+  
+//Paypal Payment
+Route::post('/paynow/paypal/{slug?}', 'Frontend\Payment\PaypalController@makePayment')->name('plan.paynow.paypal');   //Make Payment by paypal  
+Route::get('payment/paypal/status/{slug?}', 'Frontend\Payment\PaypalController@getPaypalStatus');// route for check status of the payment
+
+//Stripe Payment 
+  
+Route::post('/paynow/stripe/{slug?}', 'Frontend\Payment\StripeController@makePayment')->name('plan.paynow.stripe');   //Make Payment by paypal  
+Route::get('payment/createplan', 'Frontend\Payment\StripeController@creaeStripePlan');// route for check status of the payment
+
+
 
 Auth::routes();
 

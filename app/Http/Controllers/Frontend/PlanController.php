@@ -20,7 +20,7 @@ use Gutropolis\PaymentgatewayType;
 use Gutropolis\SubscribePayment; 
 use Gutropolis\SubscribeUser;
 
-class PricePackageController extends Controller
+class PlanController extends Controller
 {
 	
 	
@@ -49,8 +49,8 @@ class PricePackageController extends Controller
     {
 		 
          $planpkgData =$this->packagemodel->getAll();  
- 	 
-		  return view('front.price-package.index',compact('planpkgData')); 
+ 	     
+		  return view('front.plan.index',compact('planpkgData')); 
 		
     }
 	 /**
@@ -63,13 +63,14 @@ class PricePackageController extends Controller
 		$data =array();
 		if ( ! empty( $slug ) ) {
 			
-			$planpkgData = $this->packagemodel->getPkgBySlug($slug);;
+			//$planpkgData = $this->packagemodel->getPkgBySlug($slug);
+			//print_r($planpkgData);exit;
 			$data['planpkgData'] = $this->packagemodel->getPkgBySlug($slug);
 			$data['paymentmethodData'] =  PaymentgatewayType::where('status', '1')->get();
 			 
 		} 
 		 ;
-		return view('front.price-package.paymethods',$data);  
+		return view('front.plan.paymethods',$data);  
 		
     }
     public function makePayment( Request $request,$slug = '')
@@ -127,16 +128,16 @@ class PricePackageController extends Controller
 				}else{
 						$message = "No package Exist!!";
 						Toastr::success($message, 'Plan Package', ["positionClass" => "toast-top-right"]); 
-						return redirect()->route('price-package', $slug);
+						return redirect()->route('plan', $slug);
 				}
 					 
 				 
-			  //return view('front.price-package.paynow',$data);  
+			  //return view('front.plan.paynow',$data);  
 			  
 		  }else {
 				$message = "Please select payment gateway.";
                 Toastr::success($message, 'Payment Method', ["positionClass" => "toast-top-right"]); 
-					return redirect()->route('price-package', $slug);
+					return redirect()->route('plan', $slug);
 				 
 				 
 		  }

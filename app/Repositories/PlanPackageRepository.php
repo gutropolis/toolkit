@@ -34,6 +34,7 @@ class PlanPackageRepository  implements PlanPackageRepositoryInterface
         // create a new record in the database
         public function create(array $data)
         {
+			$data['slug'] = $this->model->makeSlug(getHashCode());
             return $this->model->create($data);
         }
 
@@ -64,6 +65,7 @@ class PlanPackageRepository  implements PlanPackageRepositoryInterface
 		   // Get all instances of model
         public function getPkgBySlug($slug)
         {  
+		 
 			return $this->model->where('slug', $slug)->first();
         }
         

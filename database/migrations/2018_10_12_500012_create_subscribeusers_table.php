@@ -23,12 +23,10 @@ class CreateSubscribeusersTable extends Migration
 			 
 			 
 			 $table->string('subscription_reference')->nullable();
-             $table->timestamp('trial_ends_at')->nullable();
-			
-			 $table->timestamp('ends_at')->nullable();
-             $table->timestamp('next_billing_at')->nullable();
+           
+             $table->dateTime('next_billing_at')->nullable();
              
-			 $table->integer('interval')->unsigned(); 
+			 $table->integer('interval')->nullable(); 
 		     $table->longText('billing_address')->nullable();
              $table->longText('shipping_address')->nullable();
 			 

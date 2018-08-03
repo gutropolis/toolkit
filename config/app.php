@@ -148,7 +148,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 	     Yajra\DataTables\DataTablesServiceProvider::class, 
 		 Brian2694\Toastr\ToastrServiceProvider::class,
-
+		Laravel\Cashier\CashierServiceProvider::class,
         /*
          * Package Service Providers...
          */

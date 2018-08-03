@@ -32,6 +32,7 @@ class PlansRepository  implements PlanRepositoryInterface
         // create a new record in the database
         public function create(array $data)
         {
+			$data['slug'] = $this->plan->makeSlug($data['title']);
             return $this->plan->create($data);
         }
 
@@ -50,9 +51,14 @@ class PlansRepository  implements PlanRepositoryInterface
         // show the record with the given id
         public function show($id)
         {
-            return $this->plan-findOrFail($id);
+            return $this->plan->findOrFail($id);
         }
 
-        
+           // Get all instances of model
+        public function getPkgBySlug($slug)
+        {  
+		 
+			return $this->plan->where('slug', $slug)->first();
+        }
 }
 ?>
