@@ -187,34 +187,6 @@
 																						</div>
 																				</div>
 																		 </div>
-																		 <div class="row">
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Stripe Package <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								 
-																								<select name="package_type" id="package_type" required="" class="form-control" aria-invalid="false">
-																									 
-																										 <option value="">Choose Plan</option>
-																										 <option value="day">day(1 day)</option> 
-																									      <option value="week">Weekly(7 days)</option> 
-																										  <option value="month">Monthly(30 days)</option>   
-																										  <option value="year">Annually(365 days)</option>  
-																								 </select>
-																								<div class="help-block"></div>
-																							</div>
-																						</div>
-																				</div>
-																				<div class="col-xs-12 col-sm-6 col-md-6">
-																						<div class="form-group">
-																							<h5>Price <span class="text-danger">*</span></h5>
-																							<div class="controls">
-																								<input  id="price" name="price" class="form-control" required="" data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers" aria-invalid="false" type="text"> 
-																								<div class="help-block"></div>
-																							</div>
-																						</div>
-																				</div>
-																			</div>
 																		 
 																			 
 																</div>

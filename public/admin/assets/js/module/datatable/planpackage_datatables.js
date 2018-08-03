@@ -57,7 +57,7 @@ $(document).ready(function() {
         // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            url: url + '/show/' + informid,
+            url: url + '/fetchpkg/' + informid,
             success: function (data) {
                 console.log(data);
                 $('#hdnpkgid').val(data.id);
@@ -96,3 +96,33 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
  $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
       $(this).data('form').submit();
   });
+  
+//Change plan package on change plan
+$('select[name="plan_type"]').on('change', function() {
+    var plan_id = $(this).val();
+	 var hdnurl = $('#hdnurl').val();
+     
+    $.ajax({
+        type: "get",
+		dataType: "json",
+        url: hdnurl+"/admin/planpackage/gatewaypkg/"+plan_id, 
+        success: function (data) {
+			 $('select[name="plan_type"]').prop("disabled", false);
+                   //remove disabled from province and change the options
+                   // $('select[name="province"]').prop("disabled", false);
+                    //$('select[name="province"]').html(data.response);
+					 $('#stripe_package_id').html('');
+					 var div_data="";
+					$.each(data.stripePkg,function(i,obj) {
+						
+						 console.log(obj.id+":"+obj.interval);
+						 console.log("<option value='"+obj.id+"'>"+obj.id+"#"+obj.interval+"#"+obj.billing_scheme+"</option>");
+						div_data =  div_data+"<option value='"+obj.id+"'>"+obj.id+"#"+obj.interval+"#"+obj.billing_scheme+"</option>";
+						console.log(div_data);
+						 
+					});  
+					$('#stripe_package_id').html(div_data); 
+                 
+        }
+    });
+});

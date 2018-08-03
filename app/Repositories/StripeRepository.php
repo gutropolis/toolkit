@@ -122,6 +122,21 @@ class StripeRepository  implements StripeRepositoryInterface
 				return $result->deleted;
 		 }
 		 
+		  public function getStripePackagesByPlan($planid){
+             $stripePackages=array();			  
+			 $stripePackageList = Stripe\Plan::all(array("limit" => 100));
+			  
+			 if(count($stripePackageList->data) > 0){
+					foreach ($stripePackageList->data as $pkg) {
+						if ($pkg->product == $planid) {
+							$pkginfo=array();
+							$stripePackages[] = $pkg; 
+							
+						}
+					}
+			 }
+			 return $stripePackages; 
+		 }
 		 
 		 public function getAllStripePackages(){ 
 			 $result = Stripe\Plan::all(array("limit" => 3));

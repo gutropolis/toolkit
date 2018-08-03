@@ -97,9 +97,13 @@ Auth::routes();
 	
 	// PlanPackages
 			Route::get('planpackage/data','Admin\AdminPlanPackageController@getdata')->name('planpackage.data');
-			Route::get('planpackage/show/{id}', 'Admin\AdminPlanPackageController@show'); 
+			Route::get('planpackage/show/{id}', 'Admin\AdminPlanPackageController@show')->name('planpackage.show');
+			Route::get('planpackage/fetchpkg/{id}', 'Admin\AdminPlanPackageController@getPkgInfoJson');
+			Route::get('planpackage/gatewaypkg/{plan?}', 'Admin\AdminPlanPackageController@getGatewayPkgJson');
+			
 			Route::post('planpackage/update/{id}', 'Admin\AdminPlanPackageController@update')->name('planpackage.update'); 
 			Route::post('planpackage/destroy/{id}','Admin\AdminPlanPackageController@destroy')->name('planpackage.destroy');
+			Route::post('planpackage/gateway/update/{id}', 'Admin\AdminPlanPackageController@updateGatewayPkg')->name('planpackage.update.paymentgateway'); 
 			Route::resource('planpackage','Admin\AdminPlanPackageController');
 	
 

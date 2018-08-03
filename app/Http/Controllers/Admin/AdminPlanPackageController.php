@@ -162,10 +162,39 @@ class AdminPlanPackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $planpackage = $this->packagemodel->getById($id);	
-        return response()->json($planpackage);
+    {    
+		 $data['planData']=$this->planmodel->getAll();
+		 $pkgdetail = $this->packagemodel->getById($id);
+	     $data['packageInfo']=$pkgdetail ;
+		 
+		 if($pkgdetail->stripe_package_id!=''){
+         $data['stripePkgList'] = $this->stripemodel->getStripePackagesByPlan($pkgdetail->plan->stripe_plan_id) ;
+		 }else{
+			  $data['stripePkgList'] =array();
+		 }
+	 
+         return view('admin.planpackage.show',$data);
+       
     }
+	
+	public function getPkgInfoJson($id){
+		 $planpackage = $this->packagemodel->getById($id);	
+         return response()->json($planpackage);exit;
+		
+	}
+	public function getGatewayPkgJson($plan_id){
+		
+		$plan = $this->planmodel->getById($plan_id);	
+		$plan_stripe_id =$plan->stripe_plan_id;
+		$plan_razor_id =$plan->razor_plan_id;
+		$stripePlanPkg = $this->stripemodel->getStripePackagesByPlan($plan_stripe_id); //Stripe Model
+		$razorPlanPkg =  array(); 	////Razor Model
+		
+		$data['stripePkg'] =$stripePlanPkg ;
+		$data['razorPkg'] =$razorPlanPkg ;
+         return response()->json($data);exit;
+		
+	}
 
    
     /**
@@ -228,4 +257,30 @@ class AdminPlanPackageController extends Controller
 			 return response()->json([ 'status'=>'1'] );
 		}
 	}
+	
+	
+	  /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Gutropolis\PlanPackage  $planPackage
+     * @return \Illuminate\Http\Response
+     */
+    public function updateGatewayPkg(Request $request, $id)
+    {
+        // 
+			$editdata = [
+								'plan_id' =>  $request->input('plan_type'),
+								'stripe_package_id' => $request->input('stripe_package_id'),
+								'razor_package_id' => $request->input('razor_package_id') 
+						];
+         
+		// create record and pass in only fields that are fillable
+        $this->packagemodel->update($editdata, $id); 
+		
+		 
+        Toastr::success('Payment Gateway Interation have updated successfully!!', 'Package', ["positionClass" => "toast-top-right"]); 
+        return redirect()->route('admin.planpackage.show',['id' => $id]);
+		//return response()->json('Successful added', 200); 
+    }
 }

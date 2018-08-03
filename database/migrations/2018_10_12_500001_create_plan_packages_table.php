@@ -21,11 +21,12 @@ class CreatePlanPackagesTable extends Migration
 			$table->string('slug')->unique();
             $table->string('description')->nullable(); 
 			
-			$table->enum('package_type',['day','week','month','year']);
+			$table->enum('package_type',['day','week','month','year'])->nullable(); 
             $table->double('price')->nullable(); 
             $table->integer('have_trial')->nullable();
 			$table->integer('trial_days')->nullable();
 		    $table->integer('interval')->default('0'); 
+			$table->integer('interval_type')->default('0'); 
             $table->integer('users_allowed')->nullable();
 			$table->integer('users_limit')->nullable(); 
             $table->integer('support_available')->nullable();
