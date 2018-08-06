@@ -59,8 +59,14 @@ class Kernel extends HttpKernel
         'guest' => \Gutropolis\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+		
+		//Add  Spatia Role and Permission Route Middleware  
 		'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class, 
 		'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+		
+		//Add JWT Token Route Middleware 
+        'jwt.auth' => Tymon\JWTAuth\Middleware\Authenticate::class,
+		'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
 		
     ];
 }

@@ -40,6 +40,7 @@ class CreateSubscribePaymentsTable extends Migration
 			$table->string('after_discount')->nullable();
 			$table->string('paid_amount')->nullable();
 			$table->string('payment_status')->nullable();
+			$table->string('payment_mode')->nullable();
 			$table->longText('other_details')->nullable();
 			
 			$table->string('transaction_record')->nullable();

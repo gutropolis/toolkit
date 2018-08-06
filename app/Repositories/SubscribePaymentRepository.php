@@ -10,6 +10,10 @@ use Gutropolis\SubscribePayment;
 class SubscribePaymentRepository  implements SubscribePaymentInterface
 {
         protected $model;
+		
+		public $_start_date='';
+		public $_end_date ='';
+		
         
         public function __construct(SubscribePayment $spayment)
         {
@@ -103,9 +107,16 @@ class SubscribePaymentRepository  implements SubscribePaymentInterface
 		$start_date =   date('Y-m-d');
 		$end_date   =  date('Y-m-d', strtotime($daysToAdd));
 							 
-							
-	   $this->model->start_date	= $start_date;
-	   $this->model->end_date	= $end_date;
+		 
+		if($this->_start_date != '' && $this->_end_date != '' ){
+
+		     $this->model->start_date	= $this->_start_date;
+			 $this->model->end_date	    = $this->_end_date;
+		}else{
+             $this->model->start_date	= $start_date;
+			 $this->model->end_date	= $end_date;
+		}		
+	  
 	    
 	   
 	   $this->model->payment_gateway	= $data['payment_gateway'];
@@ -127,6 +138,7 @@ class SubscribePaymentRepository  implements SubscribePaymentInterface
 	   $this->model->recurring_subscription_response	= $data['recurring_subscription_response']; 
 	   $this->model->description	= $data['description'];  
 	   $this->model->status	= $data['status']; 
+	   $this->model->payment_mode	= $data['payment_mode']; 
 	   $this->model->created_by	= $data['created_by'];  
 	    
        $this->model->save();

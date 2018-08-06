@@ -162,7 +162,7 @@ return [
 				Gutropolis\Providers\EventServiceProvider::class,
 				Gutropolis\Providers\RouteServiceProvider::class,
 				
-				//Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+				 Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
     ],
 
     /*
@@ -215,8 +215,9 @@ return [
 		'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class, 
 		'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
-		//'JWTAuth' =>  Tymon\JWTAuth\Facades\JWTAuth::class,
-	    //'JWTFactory' =>  Tymon\JWTAuth\Facades\JWTFactory::class,
+		
+		 'JWTAuth' =>  Tymon\JWTAuth\Facades\JWTAuth::class,
+	     'JWTFactory' =>  Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

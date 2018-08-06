@@ -7,8 +7,9 @@
                 <div class="card-header">Payment Status</div>
                    <div class="card-body">
 				     
-							   @if ($status =='1')  
-								   <h4 class="card-title">Congratulation!!</h4>
+							   @if ( session('data.status') =='1')  
+								   <h3 class="card-title">Congratulation!!</h3>
+										<h4 class="card-title">{{session('data.msg')}}</h4>
 									<p>After a set amount of time, a dialog is shown to the user with the option to 
 									either log out now, or stay connected. If log out now is selected, 
 									the page is redirected to a logout URL. If stay connected is selected, a keep-alive URL 
@@ -17,9 +18,9 @@
 							   @else
 										<div class="alert alert-danger">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                                            <h3 class="text-danger"><i class="fa fa-exclamation-triangle"></i> Sorry</h3> {{$msg}}
+                                            <h3 class="text-danger"><i class="fa fa-exclamation-triangle"></i> Sorry</h3> {{session('data.msg')}}
 											<br />
-											<a href="{{ URL::to('/plan/') }}/{{ $slug }}" class="btn btn-info"  >
+											<a href="{{ URL::to('/plan/') }}/{{ session('data.slug') }}" class="btn btn-info"  >
 													<i class="ti-plus text" aria-hidden="true"></i> Go Back
 											</a>
                                         </div>

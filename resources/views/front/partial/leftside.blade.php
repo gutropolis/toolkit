@@ -37,54 +37,56 @@
                     </div>
                 </div>
                 <!-- End User profile text-->
-                <!-- Sidebar navigation-->
+               <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="nav-devider"></li>
+                         <li class="nav-devider"></li>
                         <li class="nav-small-cap">PERSONAL</li>
-						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">User Management </span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{ route('admin.users.index') }}">Users</a></li>
-                               
+                                <li><a href="index.html">Minimal </a></li>
+                                <li><a href="index2.html">Analytical</a></li>
+                                <li><a href="index3.html">Demographical</a></li>
+                                <li><a href="index4.html">Modern</a></li>
                             </ul>
                         </li>
-						<li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Role & Permissions </span></a>
+						 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{ route('admin.roles.index') }}">Roles</a></li>
-                                <li><a href="{{ route('admin.permission.index') }}">Permissions</a></li>
-								 <li><a href="{{ route('admin.permissionmodule.index') }}">Permission Modules</a></li>
+                                <li><a href="index.html">Minimal </a></li>
+                                <li><a href="index2.html">Analytical</a></li>
+                                <li><a href="index3.html">Demographical</a></li>
+                                <li><a href="index4.html">Modern</a></li>
                             </ul>
                         </li>
-						
-						{{-- Plan Type Starts here --}}
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Plan & Packages  </span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Apps</span></a>
                             <ul aria-expanded="false" class="collapse">
-							<li><a href="#" class="has-arrow">Plans Management </a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="{{'admin.plans.index'}}">Plan</a></li>
-										<li><a href="{{ route('admin.plan.index') }}">Plan Type</a></li>
-                                    </ul>
-                                </li>
-								<li><a href="#" class="has-arrow">Packages </a>
-                                    <ul aria-expanded="false" class="collapse">
-                                        <li><a href="{{'admin.package-feature.index'}}">Package Feature</a></li>
-                                    </ul>
-                                </li>
-								
+                                <li><a href="app-calendar.html">Calendar</a></li>
+                                <li><a href="app-chat.html">Chat app</a></li>
+                                <li><a href="app-ticket.html">Support Ticket</a></li>
+                                <li><a href="app-contact.html">Contact / Employee</a></li>
+                                <li><a href="app-contact2.html">Contact Grid</a></li>
+                                <li><a href="app-contact-detail.html">Contact Detail</a></li>
                             </ul>
                         </li>
-                       
-
-                       
-					{{--Opportunity Management Start here --}}
-						  <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Opportunity Management </span></a>
-									<ul aria-expanded="false" class="collapse">
-										<li><a href="{{ route('admin.opportunity.index') }}">Opportunity</a></li>
-								    </ul>
-						  </li>
-		
-						{{--Opportunity Management End  here --}}
-						 
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="app-email.html">Mailbox</a></li>
+                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
+                                <li><a href="app-compose.html">Compose Mail</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-widgets"></i><span class="hide-menu">Widgets</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="widget-apps.html">Data Widgets</a></li>
+                                <li><a href="widget-data.html">Statestic Widgets</a></li>
+                                
+                            </ul>
+                        </li>
+                        
+                         
+                        
+                         
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

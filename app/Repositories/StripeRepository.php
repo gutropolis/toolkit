@@ -9,6 +9,7 @@ use Stripe\Customer;
 use Stripe\Charge; 
 use  Stripe\Plan;
 use Stripe\Product;
+use Stripe\Subscription; 
 
 class StripeRepository  implements StripeRepositoryInterface
 {
@@ -36,8 +37,20 @@ class StripeRepository  implements StripeRepositoryInterface
 		
 		public $amount ;
 		public $product='month';
-		public $currency='month';
+		public $currency='usd';
 		public $_year='month';
+		
+		
+		public $stripe_source='';
+		public $payment_description='';
+		public $customer_description='';
+		
+		public $result;
+		public $status;
+		public $customer_id= false;
+		
+		public $subscription_id='';
+		public $charge_id='';
 		
         public function __construct()
         {
@@ -74,7 +87,8 @@ class StripeRepository  implements StripeRepositoryInterface
 			$result =	Stripe\Product::all(array("limit" => 3));
 			return $result;
 	    }
-		   
+		  
+		  
 	  
 	   
 	   public  function updatePlan(array $data){
@@ -145,10 +159,53 @@ class StripeRepository  implements StripeRepositoryInterface
 		 
 		 
 	 /*============Add customer Here ================================================*/
-
-
+       public function createCustomer(){
+		   try {
+						
+							$data =			array( 
+												  "source" => $this->stripe_source, // obtained with Stripe.js
+												  "description" => $this->customer_description //Customer for jenny.rosen@example.com
+												);
+						  			  
+						  // Use Stripe's bindings...
+							$this->result = Stripe\Customer::create($data); 
+							  			    
+							if(isset($this->result->id)){
+									$this->status='1';
+									$this->msgArray[]='Customer Have Created Successfully!!';
+							}else{
+								$this->status='0'; 
+								$this->msgArray[]='Getting issue in making in Stripe Product.';
+							}
+						  
+						} catch (Exception $e) {
+							// Something else happened, completely unrelated to Stripe
+							$this->status='0'; 
+							$this->msgArray[]='Getting issue in making in Stripe Product.';
+						}   
+		   
+	   }
+    
 
     /*===========End Customer Here ==================================================*/	 
+		 
+      public function getSubscriptionDetail(){ 
+			try {  
+				  // Use Stripe's bindings...
+					$this->result = Stripe\Subscription::retrieve($this->subscription_id);  	 
+			  
+			} catch (Exception $e) { }    
+	  }
+	  
+	   public function getChargeDetail(){ 
+			try {  
+			 
+				  // Use Stripe's bindings...
+					$this->result = Stripe\Charge::retrieve($this->charge_id);  	 
+			  
+			} catch (Exception $e) { }    
+	  }
+		 
 		 
 	  /*==============Add Subscription Here =========================================*/
 
@@ -161,6 +218,34 @@ class StripeRepository  implements StripeRepositoryInterface
       /*=========Resume subscription =======================================================*/	  
 		 
 	   
-	    
+	  /* Make payment without storing customer information */
+		  public  function directCharging(){
+					 
+					try {
+						
+							$data =			array(
+												  "amount" => $this->amount,
+												  "currency" => $this->currency,
+												  "source" => $this->stripe_source, // obtained with Stripe.js
+												  "description" => $this->payment_description
+												);
+						  			  
+						  // Use Stripe's bindings...
+							$this->result = Stripe\Charge::create($data); 
+							if(isset($this->result->id)  && $this->result->paid==true ){
+									$this->status='1';
+									$this->msgArray[]='Payment have done successfully!!';
+							}else{
+								$this->status='0'; 
+								$this->msgArray[]='Getting issue in making in Stripe Product.';
+							}
+						  
+						} catch (Exception $e) {
+							// Something else happened, completely unrelated to Stripe
+							$this->status='0'; 
+							$this->msgArray[]='Getting issue in making in Stripe Product.';
+						}     
+			}
+			 	  
 }
 ?>

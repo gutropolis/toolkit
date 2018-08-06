@@ -159,5 +159,15 @@ class PaymentController extends Controller
       
     }
  
-	
+	  /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function paymentStatus()
+    {  
+	 	 
+		  return view('front.payment-status.status');  
+      
+    }
 }

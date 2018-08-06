@@ -10,9 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+ 
+ 
+Route::get('/myaccount', 'Frontend\User\UserController@index');
+
+//HeatMap Module Start Here //
+Route::get('/heatmap/domain', 'Frontend\HeatMap\DomainController@index');
 
  
-
 Route::get('/', 'Frontend\PlanController@index');
 Route::get('/plan/{slug?}', 'Frontend\PlanController@showpricepkg')->name('plan'); ; 
 
@@ -26,7 +31,22 @@ Route::get('payment/paypal/status/{slug?}', 'Frontend\Payment\PaypalController@g
 //Stripe Payment 
   
 Route::post('/paynow/stripe/{slug?}', 'Frontend\Payment\StripeController@makePayment')->name('plan.paynow.stripe');   //Make Payment by paypal  
-Route::get('payment/createplan', 'Frontend\Payment\StripeController@creaeStripePlan');// route for check status of the payment
+Route::get('payment/testing', 'Frontend\Payment\StripeController@testing');// route for check status of the payment
+
+//Payment Status 
+Route::get('/payment/status/{slug?}', 'Frontend\Payment\PaymentController@paymentStatus')->name('payment.status'); 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
