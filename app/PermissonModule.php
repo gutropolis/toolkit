@@ -24,7 +24,7 @@ class PermissonModule extends Model
 
     protected $fillable = [
 
-        'title', 'description'
+        'title', 'description','created_by'
 
     ];
 

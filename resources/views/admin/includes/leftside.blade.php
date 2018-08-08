@@ -86,16 +86,17 @@
                                 
                                 <li> <a class="has-arrow" href="#" aria-expanded="false">Plans Management</a>
                                     <ul aria-expanded="false" class="collapse">
-                                        <li><a href="{{'admin.plans.index'}}">Plan</a></li>
-                                        <li><a href="{{ route('admin.planpackage.index') }}">Plan Type</a></li> 
+                                        <li><a href="{{route('admin.plans.index')}}">Plan</a></li>
+                                        <li><a href="{{ route('admin.planpackage.index') }}">Packages</a></li> 
                                     </ul>
                                 </li>
+								<!--
                                  <li> <a class="has-arrow" href="#" aria-expanded="false">Packages</a>
                                     <ul aria-expanded="false" class="collapse">
-                                        <li><a href="{{'admin.package-feature.index'}}">Package Feature</a></li>
+                                        <li><a href="{{route('admin.package-feature.index')}}">Package Feature</a></li>
                                         
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
 						

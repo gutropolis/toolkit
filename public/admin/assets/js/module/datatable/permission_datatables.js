@@ -6,9 +6,9 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'name', name: 'name' },
-                { data: 'description', name: 'description' },
-                { data: 'display_name', name: 'display_name' },
+				{ data: 'display_name', name: 'display_name' },
 				{ data: 'guard_name' , name: 'guard_name'},
+                { data: 'description', name: 'description' }, 
                 { data: 'created_at', name:'created_at'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ]

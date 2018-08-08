@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
 {
-    protected $table = '_leads';
+    protected $table = 'leads';
     protected $fillable = [
 			'id','first_name','last_name','lead_owner','company','title_or_position','phone',
 			'mobile','fax','email','lead_status','rating','address','Industry','lead_source','annual_revenue',

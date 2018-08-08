@@ -108,7 +108,8 @@ $permissionmodule = PermissonModule::latest()->paginate(5);
 
             'title' => 'required',
 
-            'description' => 'required',
+            'description' => 'required'
+			 
 
         ]);
 
@@ -118,7 +119,7 @@ $permissionmodule = PermissonModule::latest()->paginate(5);
 		
         return redirect()->route('admin.permissionmodule.index')
 
-                        ->with('success','Product created successfully.');
+                        ->with('success','Permission Module created successfully.');
 
     }
 
