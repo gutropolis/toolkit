@@ -18,6 +18,20 @@ class CreateLeadsTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
+			
+			//Extra Field //
+			$table->string('lead_type');   //cold, warm and hot leads based on the probability of the lead converting into a future sale
+			/*
+    New
+    Working – Contact Attempted
+    Working – Contacted
+    Qualified
+    Closed – Not Contacted
+    Closed – Not Qualified (or Not Interested)
+    Closed – Spam
+    Future Potential*/
+
+			
             $table->string('lead_owner');
             $table->string('company');
             $table->string('title_or_position');

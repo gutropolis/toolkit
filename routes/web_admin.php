@@ -45,10 +45,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => ['auth'],'as' => 'admin.'], 
 								Route::get('data', 'Admin\AdminPermissionController@data')->name('permission.data');
 					    }); 
 						
-					//Opportunity Start Here//
-						Route::resource('opportunity','Admin\AdminOpportunityController');
-						Route::get('opportunity/destroy/{id}','Admin\AdminOpportunityController@destroy')->name('opportunity.destroy');
-					//Opportunity End Here//
 					
 	 
 					    
@@ -111,7 +107,10 @@ Route::group([ 'prefix' => 'admin', 'middleware' => ['auth'],'as' => 'admin.'], 
 					
 					});
 						
-
+					//Opportunity Start Here//
+						Route::resource('opportunity','Admin\AdminOpportunityController');
+						Route::get('opportunity/destroy/{id}','Admin\AdminOpportunityController@destroy')->name('opportunity.destroy');
+					 
 					//Tenant start here tenants/data 
 					Route::group(['prefix' => 'tenant'], function () {
 						Route::get('/','Admin\AdminTenantController@index')->name('tenant.index');

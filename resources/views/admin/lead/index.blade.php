@@ -122,7 +122,7 @@
      <!-- This is data table -->
     <script src="{{ URL::to('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     
-     <script src="{{ URL::to('admin/assets/js/module/datatable/leadData.js') }}"></script>
+     <script src="{{ URL::to('admin/assets/js/module/datatable/lead_datatables.js') }}"></script>
     <!-- start - This is for export functionality only -->
       
     

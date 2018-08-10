@@ -73,7 +73,7 @@
     <script src="{{ URL::to('admin/plugins/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ URL::to('admin/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="{{ URL::to('admin/plugins/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ URL::to('admin/assets/js/jquery.slimscroll.js') }}"></script>
     <!--Wave Effects -->
     <script src="{{ URL::to('admin/assets/js/waves.js') }}"></script>
     <!--Menu sidebar -->
